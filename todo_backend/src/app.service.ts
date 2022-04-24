@@ -5,4 +5,15 @@ export class AppService {
   getHello(): string {
     return 'Hello World!';
   }
+
+  checkCode(obj: { code: string }): { result: 'ok' | 'error' } {
+    console.log(obj);
+    if (obj == null) {
+      return { result: 'error' };
+    }
+    if (obj.code !== '2245') {
+      return { result: 'error' };
+    }
+    return { result: 'ok' };
+  }
 }
