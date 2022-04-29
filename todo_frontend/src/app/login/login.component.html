@@ -1,12 +1,12 @@
-<div>
+<div class="login">
   <ul class="login_list">
     <li  *ngFor='let item of items'>
-      <button (click)="addDigit(item)">{{item}}</button>
+      <button type="button" class="btn btn-info" (click)="addDigit(item)">{{item}}</button>
     </li>
     <li>
-      <button (click)="removeDigit()">&lt;</button>
+      <button class="btn btn-primary" (click)="removeDigit()">&lt;</button>
     </li>
   </ul>
-  <div>{{ loginCode$$ | async}}</div>
-  <button>Login</button>
+  <div class="login_code">{{ loginCode$$ | async}}</div>
+  <button class="btn btn-success" >Login</button>
 </div>
