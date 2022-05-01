@@ -17,7 +17,7 @@ export class AppService {
     if (obj == null) {
       return { result: 'error' };
     }
-    if (obj.code !== '2245') {
+    if (obj.code !== '2145') {
       return { result: 'error' };
     }
     return { result: 'ok' };
