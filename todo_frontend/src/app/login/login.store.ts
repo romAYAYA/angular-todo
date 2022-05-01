@@ -11,7 +11,6 @@ export class LoginStore {
     numberArray: []
   });
 
-  store$$: Observable<ILoginStore> = this._store.asObservable();
 
   constructor() {}
 
