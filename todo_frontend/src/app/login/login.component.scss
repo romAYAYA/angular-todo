@@ -1,7 +1,18 @@
-.login_list{
-  list-style: none;
+.login{
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
+.login_list{
+  display: flex;
+  list-style: none;
+
+}
+
+.login_code{
+  font-size: 20px;
 }
 
 .login_list li {
