@@ -8,5 +8,5 @@
     </li>
   </ul>
   <div class="login_code">{{ loginCode$$ | async}}</div>
-  <button class="btn btn-success" >Login</button>
+  <button class="btn btn-success" [disabled]="loginButtonDisabled$$ | async" (click)="onLogin()">Login</button>
 </div>
