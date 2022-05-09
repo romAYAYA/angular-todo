@@ -26,6 +26,16 @@ export class LoginStore {
     distinctUntilChanged()
   );
 
+  isLoginButtonDisabled$$: Observable<boolean> = this._store.pipe(
+    map((store) => store.numberArray.length < 4 || store.isLoggingIn)
+  );
+
+  // дизаблим ту кпопку которая нажата
+  isButtonDisabled$$: Observable<boolean> = this._store.pipe(
+    map((store) => store.numberArray.includes(1))
+  );
+
+
   isLoggingIn$$: Observable<boolean> = this._store.pipe(map((store) => store.isLoggingIn));
 
   constructor(private _http: HttpClient) {}

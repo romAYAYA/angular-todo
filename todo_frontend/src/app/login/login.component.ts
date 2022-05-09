@@ -13,6 +13,7 @@ export class LoginComponent {
   public items: number[] = [1, 2, 3, 4, 5];
   loginCode$$: Observable<string> = this._loginStore.loginCode$$;
   public loginButtonDisabled$$: Observable<boolean> = this._loginStore.isLoggingIn$$;
+  public buttonDisabled$$:Observable<boolean> = this._loginStore.isButtonDisabled$$;
 
   constructor(private _loginStore: LoginStore) {}
 
