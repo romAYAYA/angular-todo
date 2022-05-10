@@ -10,9 +10,9 @@
     <br />
     Задачу реализовать так же через store и actions с учетом unidirectional flow (наших стрелочек, которые мы делали)
   </p>
-  <button class='btn btn-primary'>&lt;</button>
-  <span class='alert'>6</span>
-  <button class='btn btn-primary'>&gt;</button>
+  <button (click)="onDecrementClick()" class='btn btn-primary'>&lt;</button>
+  <span class='alert'>{{counter$$ | async}}</span>
+  <button (click)="onIncrementClick()"  class='btn btn-primary'>&gt;</button>
 </div>
 
 <div class='m-2'>
