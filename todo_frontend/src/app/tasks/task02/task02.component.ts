@@ -11,7 +11,8 @@ import { Observable } from 'rxjs';
 })
 export class Task02Component {
   public numbers$$: Observable<number[]> = this.store.numbers$$;
-  public countOfRandomNumbers$$: Observable<number> = this.store.countOfRandomNumbers$$;
+  public countOfNumbers$$: Observable<number> = this.store.countOfNumbers$$;
+
 
   constructor(private store: Task02Service) { }
 
