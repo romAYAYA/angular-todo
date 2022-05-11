@@ -32,6 +32,10 @@ export class Task01Service {
      distinctUntilChanged()
    );
 
+    public user$$:Observable<IUser[]> = this._store.pipe(
+      map((store) => store.users.filter((item) => item.id === store.counter)),
+      distinctUntilChanged()
+    )
 
    public incrementCounter(): void {
      const currentCounter = this._store.getValue().counter + 1;

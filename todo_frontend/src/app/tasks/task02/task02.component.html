@@ -19,16 +19,16 @@
 </div>
 
 <div class='m-2 row'>
-  <div *ngIf=" numbers$$ | async as numbers;" class='col col-3'>
+  <div  class='col col-3'>
     <div>Numbers in collection: </div>
-    <div *ngFor="let number of numbers ">{{number}}</div>
+    <div *ngFor="let number of numbers$$ | async as numbers ">{{number}}</div>
   </div>
 
   <div class='col col-3' style='color: black'>
     <div>Statistics: (вторая часть задачи)</div>
     <div>Count: {{ countOfNumbers$$ | async}}</div>
-    <div>Min: 2</div>
-    <div>Max: 30</div>
-    <div>Average: 13</div>
+    <div>Min: {{minOfAllNumbers$$ | async}}</div>
+    <div>Max: {{maxOfAllNumbers$$ | async}}</div>
+    <div>Average: {{averageNumber$$ | async}}</div>
   </div>
 </div>

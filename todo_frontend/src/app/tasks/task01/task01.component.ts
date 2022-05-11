@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Task01Service } from './task01.service';
+import { IUser, Task01Service } from './task01.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class Task01Component {
    public counter$$:Observable<number> = this.Task01Service.counter$$;
+   public user$$: Observable<IUser[]> = this.Task01Service.user$$;
 
   constructor(private Task01Service: Task01Service) { }
 

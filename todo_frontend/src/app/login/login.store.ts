@@ -32,7 +32,7 @@ export class LoginStore {
 
   // дизаблим ту кпопку которая нажата
   isButtonDisabled$$: Observable<boolean> = this._store.pipe(
-    map((store) => store.numberArray.includes(1))
+   map((store) => store.numberArray.includes(2))
   );
 
 

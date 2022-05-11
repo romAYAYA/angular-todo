@@ -15,7 +15,7 @@
   <button (click)="onIncrementClick()"  class='btn btn-primary'>&gt;</button>
 </div>
 
-<div class='m-2'>
-  The user with id=6 is Eugene <br />
-  <span style='color: lightgray'>// The user with id=5 does not exist</span>
+<div class='m-2' *ngFor="let user of user$$ | async">
+  The user with id={{user.id}} is {{user.name}} <br />
+  <span  style='color: lightgray'>// The user with id=5 does not exist</span>
 </div>

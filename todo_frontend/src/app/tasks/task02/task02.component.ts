@@ -12,7 +12,9 @@ import { Observable } from 'rxjs';
 export class Task02Component {
   public numbers$$: Observable<number[]> = this.store.numbers$$;
   public countOfNumbers$$: Observable<number> = this.store.countOfNumbers$$;
-
+  public minOfAllNumbers$$:Observable<number> = this.store.minOfAllnumbers$$;
+  public maxOfAllNumbers$$:Observable<number> = this.store.maxOfAllNumbers$$;
+  public averageNumber$$:Observable<number> = this.store.averageNumber$$;
 
   constructor(private store: Task02Service) { }
 
