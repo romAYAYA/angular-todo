@@ -8,9 +8,8 @@ export interface IStore {
 @Injectable()
 export class Task02Service {
 
-
   private _store: BehaviorSubject<IStore> = new BehaviorSubject<IStore>({
-    randomNumbers: [ 1, 2, 3, 4, 5],
+    randomNumbers: [],
   });
 
   public numbers$$:Observable<number[]>= this._store.pipe(
@@ -40,15 +39,40 @@ export class Task02Service {
   )
 
   public addRandomNumber(): void {
-    const randomNumber = this._getRandomNumber();
-    this._store.getValue().randomNumbers.push(randomNumber);
-  }
+    // Как я и говорил много раз, программирование - оно тупое.
+    // Исходим из вопроса, что нам надо обновить массив внутри стора
+    // Для этого нам нужно 1) прочитать данные из стора
+    // 2) Добавить элемент в конец массива
+    // 3) Перезаписать данные в сторе.
+    // Но у нас есть одно условие, нам нужна копия массива. Поэтому мы на шаге 1
+    // после прочтения данных из стора отклонируем массив
+    // ниже максимально тупое решение:
 
+    // 1. Прочитаем данные из стора
+    const randomNumbersInStore: number[] = this._store.getValue().randomNumbers;
+    // создадим копию массива. Если мы не знаем как это сделать коротко, делаем тупо циклом
+    const copyOfNumbers: number[] = [];
+    randomNumbersInStore.forEach(num => copyOfNumbers.push(num)); // просто в цикле копируем массив в новый
+    // добавляем новый элемент в конец массива-копии
+    copyOfNumbers.push(this._getRandomNumber());
+    // записываем новые значения в стор
+    this._updateStore({ randomNumbers: copyOfNumbers });
+
+    // ниже более короткий способ того же самого, что у нас написано выше, просто используя всякий синтаксический
+    // сахар, который есть в джаваскрипте
+    if ('1'.toString() === '2') { // это просто чтобы этот код не выполнялся
+      // тут создается копия массива и добавляется новый элемент в конец
+      const updatedArray = [...this._store.getValue().randomNumbers, this._getRandomNumber()];
+      // обновляем стор новым массивом
+      this._updateStore({ randomNumbers: updatedArray });
+    }
+
+  }
 
   private _getRandomNumber(max: number = 100): number {
     return Math.floor(Math.random() * max);
   }
-  // @ts-ignore
+
   private _updateStore(data: Partial<IStore>): void {
     this._store.next({ ...this._store.getValue(), ...data });
   }
