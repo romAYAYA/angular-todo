@@ -4,9 +4,10 @@
       <button
         type="button"
         class="btn btn-info"
-        [disabled]="buttonDisabled$$ | async"
+        [disabled]="isButtonDisabled$$(item) | async"
         (click)="addDigit(item)"
-        >{{ item }}</button>
+        >{{ item }}
+      </button>
     </li>
     <li>
       <button class="btn btn-primary" (click)="removeDigit()">&lt;</button>

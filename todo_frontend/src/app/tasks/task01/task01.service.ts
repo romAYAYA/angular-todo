@@ -32,8 +32,8 @@ export class Task01Service {
      distinctUntilChanged()
    );
 
-    public user$$:Observable<IUser[]> = this._store.pipe(
-      map((store) => store.users.filter((item) => item.id === store.counter)),
+    public foundUser$$: Observable<IUser | null> = this._store.pipe(
+      map((store) => store.users.find((item) => item.id === store.counter) ?? null),
       distinctUntilChanged()
     )
 

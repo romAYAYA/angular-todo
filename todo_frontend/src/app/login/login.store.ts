@@ -32,7 +32,7 @@ export class LoginStore {
 
   // дизаблим ту кпопку которая нажата
   isButtonDisabled$$: Observable<boolean> = this._store.pipe(
-   map((store) => store.numberArray.includes(2))
+   map((store) => store.numberArray.includes(store.numberArray.length))
   );
 
 
@@ -58,6 +58,20 @@ export class LoginStore {
     currValue.numberArray.pop();
     currValue.numberArray = [...currValue.numberArray];
     this._store.next(currValue);
+  }
+
+
+  isNumberInArray(num: number): boolean {
+    if(this._store.getValue().numberArray.includes(num)){
+      return true;
+    }
+    return false;
+  }
+
+  isNumberInArray$(num: number): Observable<boolean> {
+    return this._store.pipe(
+      map(store => store.numberArray.includes(num))
+    );
   }
 
   doLogin(): Observable<boolean> {

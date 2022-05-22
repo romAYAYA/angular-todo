@@ -12,10 +12,12 @@ import { LoginStore } from './login.store';
 export class LoginComponent {
   public items: number[] = [1, 2, 3, 4, 5];
   loginCode$$: Observable<string> = this._loginStore.loginCode$$;
-  public loginButtonDisabled$$: Observable<boolean> = this._loginStore.isLoggingIn$$;
+  public loginButtonDisabled$$: Observable<boolean> = this._loginStore.isLoginButtonDisabled$$;
   public buttonDisabled$$:Observable<boolean> = this._loginStore.isButtonDisabled$$;
 
   constructor(private _loginStore: LoginStore) {}
+
+  isButtonDisabled$$: (num: number) => Observable<boolean> = (n) => this._loginStore.isNumberInArray$(n);
 
   addDigit(item: number): void {
     this._loginStore.addDigit(item);
@@ -33,5 +35,9 @@ export class LoginComponent {
         console.log('не тот код');
       }
     });
+  }
+
+  checkIfDisabled(item: number): boolean {
+   return this._loginStore.isNumberInArray(item);
   }
 }

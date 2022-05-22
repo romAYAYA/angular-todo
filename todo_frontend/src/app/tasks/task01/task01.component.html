@@ -15,7 +15,9 @@
   <button (click)="onIncrementClick()"  class='btn btn-primary'>&gt;</button>
 </div>
 
-<div class='m-2' *ngFor="let user of user$$ | async">
+<div class='m-2' *ngIf=" foundUser$$ | async as user; else notFound">
   The user with id={{user.id}} is {{user.name}} <br />
-  <span  style='color: lightgray'>// The user with id=5 does not exist</span>
 </div>
+<ng-template #notFound>
+  <span>// The user with id={{counter$$ | async}} does not exist</span>
+</ng-template>

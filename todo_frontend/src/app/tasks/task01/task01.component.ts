@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class Task01Component {
    public counter$$:Observable<number> = this.Task01Service.counter$$;
-   public user$$: Observable<IUser[]> = this.Task01Service.user$$;
+   public foundUser$$: Observable<IUser | null> = this.Task01Service.foundUser$$;
 
   constructor(private Task01Service: Task01Service) { }
 

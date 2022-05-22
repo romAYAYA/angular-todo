@@ -2,41 +2,55 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, distinctUntilChanged, map, Observable } from 'rxjs';
 
 export interface IStore {
-  randomNumbers: number[]
+  randomNumbers: number[];
 }
 
 @Injectable()
 export class Task02Service {
 
   private _store: BehaviorSubject<IStore> = new BehaviorSubject<IStore>({
-    randomNumbers: [],
+    randomNumbers: []
   });
 
-  public numbers$$:Observable<number[]>= this._store.pipe(
+  public numbers$$: Observable<number[]> = this._store.pipe(
     map((store) => store.randomNumbers),
     distinctUntilChanged()
-  )
+  );
 
-  public countOfNumbers$$:Observable<number> = this._store.pipe(
+  public countOfNumbers$$: Observable<number> = this._store.pipe(
     map((store) => store.randomNumbers.length),
     distinctUntilChanged()
-  )
+  );
 
-  public minOfAllnumbers$$:Observable<number> = this._store.pipe(
-    map((store) => Math.min(...store.randomNumbers)),
+  public minOfAllnumbers$$: Observable<number> = this._store.pipe(
+    map((store) => {
+      if (store.randomNumbers.length === 0) {
+        return 0;
+      }
+      return Math.min(...store.randomNumbers);
+    }),
     distinctUntilChanged()
-  )
+  );
 
-  public maxOfAllNumbers$$:Observable<number> = this._store.pipe(
-    map((store) => Math.max(...store.randomNumbers)),
+  public maxOfAllNumbers$$: Observable<number> = this._store.pipe(
+    map((store) => {
+      if(store.randomNumbers.length === 0){
+        return 0;
+      }
+      return Math.max(...store.randomNumbers);
+    }),
     distinctUntilChanged()
-  )
+  );
 
-  public averageNumber$$:Observable<number> = this._store.pipe(
-    map((store) =>
-      (store.randomNumbers.reduce((acc, curr) => acc+ curr, 0) / store.randomNumbers.length)),
+  public averageNumber$$: Observable<number> = this._store.pipe(
+    map((store) => {
+      if(store.randomNumbers.length === 0){
+        return 0;
+      }
+      return store.randomNumbers.reduce((acc, curr) => acc + curr, 0) / store.randomNumbers.length;
+    }),
     distinctUntilChanged()
-  )
+  );
 
   public addRandomNumber(): void {
     // Как я и говорил много раз, программирование - оно тупое.
@@ -76,4 +90,5 @@ export class Task02Service {
   private _updateStore(data: Partial<IStore>): void {
     this._store.next({ ...this._store.getValue(), ...data });
   }
+
 }
