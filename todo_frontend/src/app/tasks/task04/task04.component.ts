@@ -12,7 +12,15 @@ import { Observable } from 'rxjs';
 })
 export class Task04Component {
   public boxes$$: Observable<string[]> = this._store.area$$;
+  public move$$:Observable<number> = this._store.move$$;
+
   constructor(private _store: Task04Service) { }
 
 
+  markArea(event: Event): void {
+  if((event.target as Element).className === 'box'){
+    this._store.markAreaInStore();
+    console.log('mark');
+  }
+  }
 }

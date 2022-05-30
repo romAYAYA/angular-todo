@@ -24,7 +24,7 @@
 <div class='m-2 game-buttons'>
   <div class="aria-wrapper">
     <div id="area">
-      <div *ngFor=" let box of boxes$$ | async" class="box">{{box}}</div>
+      <div (click)="markArea($event)" *ngFor=" let box of boxes$$ | async" class="box">{{box}}</div>
     </div>
   </div>
 </div>

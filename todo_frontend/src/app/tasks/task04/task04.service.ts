@@ -11,11 +11,28 @@ export interface IStore {
 export class Task04Service {
 
   private _store: BehaviorSubject<IStore> = new BehaviorSubject<IStore>({
-    area: ['X', 'O', 'X', 'O', 'X', 'O', 'X', 'O', 'X'],
+    area: ['X', 'O', 'X', 'X', 'O', 'X', 'X', 'O', 'X'],
     move: 0
   });
 
   area$$:Observable<string[]> = this._store.pipe(
     map((store) => store.area)
   )
+
+  move$$:Observable<number> = this._store.pipe(
+    map((store) => store.move)
+  )
+
+
+  public markAreaInStore():void {
+    const areaInStore: string[] = this._store.getValue().area;
+    const copyOfAreas: string[] = [];
+    areaInStore.forEach(item => copyOfAreas.push(item));
+    copyOfAreas.push('X');
+    this._updateStore({ area: copyOfAreas });
+  }
+
+  private _updateStore(data: Partial<IStore>): void {
+    this._store.next({ ...this._store.getValue(), ...data });
+  }
 }
