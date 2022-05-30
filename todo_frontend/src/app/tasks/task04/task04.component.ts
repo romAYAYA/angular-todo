@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Task04Service } from './task04.service';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-task04',
@@ -9,8 +11,8 @@ import { Task04Service } from './task04.service';
   providers: [Task04Service]
 })
 export class Task04Component {
-
-  constructor() { }
+  public boxes$$: Observable<string[]> = this._store.area$$;
+  constructor(private _store: Task04Service) { }
 
 
 }

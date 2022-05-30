@@ -22,20 +22,10 @@
 </div>
 
 <div class='m-2 game-buttons'>
-  <div>
-    <button class='btn btn-outline-success'>&nbsp;</button>
-    <button class='btn btn-outline-success'>&nbsp;</button>
-    <button class='btn btn-outline-success'>&nbsp;</button>
-  </div>
-  <div>
-    <button class='btn btn-outline-success'>&nbsp;</button>
-    <button class='btn btn-outline-success'>&nbsp;</button>
-    <button class='btn btn-outline-success'>&nbsp;</button>
-  </div>
-  <div>
-    <button class='btn btn-outline-success'>&nbsp;</button>
-    <button class='btn btn-outline-success'>&nbsp;</button>
-    <button class='btn btn-outline-success'>&nbsp;</button>
+  <div class="aria-wrapper">
+    <div id="area">
+      <div *ngFor=" let box of boxes$$ | async" class="box">{{box}}</div>
+    </div>
   </div>
 </div>
 

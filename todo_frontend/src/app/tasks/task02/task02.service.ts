@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, distinctUntilChanged, map, Observable } from 'rxjs';
 
 export interface IStore {
-  randomNumbers: number[];
+  randomNumbers: number[]
 }
 
 @Injectable()

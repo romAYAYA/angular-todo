@@ -13,14 +13,14 @@
 <div class='m-2 row'>
   <div  class='col col-3'>
     <div>Numbers in collection: </div>
-<!--    <div *ngFor="let number of numbers$$ | async as numbers ">{{number}}</div>-->
+    <div *ngFor="let number of numbers$$ | async as numbers ">{{number}}</div>
   </div>
 
   <div class='col col-3' style='color: black'>
     <div>Statistics: (вторая часть задачи)</div>
-    <div>Count: 0</div>
-    <div>Min: 0</div>
-    <div>Max: 0</div>
-    <div>Average: 0</div>
+    <div>Count: {{ countOfNumbers$$ | async}}</div>
+    <div>Min: {{minOfAllNumbers$$ | async}}</div>
+    <div>Max: {{maxOfAllNumbers$$ | async}}</div>
+    <div>Average: {{averageNumber$$ | async}}</div>
   </div>
 </div>
