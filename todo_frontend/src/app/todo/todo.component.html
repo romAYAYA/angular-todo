@@ -1,0 +1,45 @@
+<section class="heading-section">
+  <h1 class="title is-1 has-text-centered">Todos</h1>
+</section>
+
+<div class="container">
+  <div class="add-todo-box">
+    <form>
+      <h2 class="title is-5">New Todo</h2>
+      <div class="field is-grouped my-0">
+        <p class="control is-expanded">
+          <input
+            minlength="2"
+            required
+            name="text"
+            class="input"
+            type="text"
+            placeholder="Type todo text here...">
+        </p>
+        <p class="control">
+          <button class="button alt-gradient-button">
+            <i class="material-icons">add</i>
+            Add
+          </button>
+        </p>
+      </div>
+<!--      <div *ngIf="todoTextField.invalid && showValidationErrors">-->
+<!--        <p class="help is-danger" *ngIf="todoTextField.control.errors">Please enter text of your todo</p>-->
+<!--        <p class="help is-danger" *ngIf="todoTextField.control.errors">Todo text must be at least 2 characters</p>-->
+<!--      </div>-->
+
+    </form>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="todos-list">
+      <app-todo-item
+        *ngFor="let todo of todos"
+        [todo]="todo"
+        (todoClicked)="toggleCompleted(todo)"
+      ></app-todo-item>
+    </div>
+  </div>
+</section>
