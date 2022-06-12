@@ -19,7 +19,7 @@ export class AppController {
 
   @Get('todos')
   async getTodos(): Promise<ITodoStorageItem[]> {
-    await this._sleep(2000);
+    await this._sleep(1500);
     return this.appService.todoStore.getTodos();
   }
 
