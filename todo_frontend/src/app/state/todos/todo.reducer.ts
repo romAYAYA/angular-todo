@@ -5,12 +5,12 @@ import {
   loadTodos,
   loadTodosSuccess,
   loadTodosFailure,
-} from './todo.actions';
+} from './todo.action';
 import { Todo } from '../../todo/todo.model';
 
 export interface TodoState {
   todos: Todo[];
-  error: string;
+  error: string | null;
   status: 'pending' | 'loading' | 'error' | 'success';
 }
 
