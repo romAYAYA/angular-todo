@@ -9,12 +9,12 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'todo',
-    component: TodoComponent
-  },
-  {
     path: 'tasks',
     loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksModule)
+  },
+  {
+    path: 'todo',
+    component: TodoComponent
   },
 ];
 

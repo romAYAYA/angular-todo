@@ -10,10 +10,13 @@ export interface IStore {
 @Injectable()
 export class Task04Service {
 
+
   private _store: BehaviorSubject<IStore> = new BehaviorSubject<IStore>({
-    area: ['X', 'O', 'X', 'X', 'O', 'X', 'X', 'O', 'X'],
+    area: [],
     move: 0
   });
+
+  constructor() {}
 
   area$$:Observable<string[]> = this._store.pipe(
     map((store) => store.area)
@@ -22,7 +25,6 @@ export class Task04Service {
   move$$:Observable<number> = this._store.pipe(
     map((store) => store.move)
   )
-
 
   public markAreaInStore():void {
     const areaInStore: string[] = this._store.getValue().area;
@@ -36,3 +38,5 @@ export class Task04Service {
     this._store.next({ ...this._store.getValue(), ...data });
   }
 }
+
+

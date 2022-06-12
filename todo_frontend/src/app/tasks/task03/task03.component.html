@@ -7,7 +7,7 @@
 </div>
 
 <div class='m-2'>
-  <button (click)="onClick()" class='btn btn-primary'>Add random number</button>
+  <button (click)="onClick()" [disabled]="isRandomNumberDisabled$$ | async" class='btn btn-primary'>Add random number</button>
 </div>
 
 <div class='m-2 row'>

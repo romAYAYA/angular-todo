@@ -1,17 +1,25 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, distinctUntilChanged, map, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, distinctUntilChanged, EMPTY, finalize, map, Observable, of, switchMap, take, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 export interface IStore {
-  randomNumbers: number[]
+  randomNumbers: number[],
+  isHttpLoading: boolean
 }
 
 @Injectable()
 export class Task03Service {
 
   private _store: BehaviorSubject<IStore> = new BehaviorSubject<IStore>({
-    randomNumbers: []
+    randomNumbers: [],
+    isHttpLoading: false
   });
+
+  isRandomNumberDisabled$$: Observable<boolean> = this._store.pipe(
+    map((store) => store.isHttpLoading),
+    distinctUntilChanged()
+
+  )
 
   randomNumbers$$:Observable<number[]> = this._store.pipe(
     map((store) => store.randomNumbers),
@@ -61,18 +69,42 @@ export class Task03Service {
 
   constructor(private _http: HttpClient) {}
 
-  public addRandomNumber$(): Observable<void> {
+  public addRandomNumber$2(): Observable<void> {
     return this._http.get<{result: number}>('http://localhost:3000/randomNumber').pipe(
-      map((object) => Number(object.result)),
-      map((number) => {
+      tap(() => this._updateStore({ isHttpLoading: true })),
+      map((object) => object.result),
+      tap((number) => {
+        const randomNumbersInStore: number[] = this._store.getValue().randomNumbers;
+        const copyOfNumbers: number[] = [];
+        randomNumbersInStore.forEach(num => copyOfNumbers.push(num));
+        copyOfNumbers.push(number);
+        this._updateStore({ randomNumbers: copyOfNumbers, isHttpLoading: false });
+      }),
+      map(() => void 0)
+    )
+  }
+
+  public addRandomNumber$(): Observable<void> {
+    return this.randomNumbers$$.pipe(
+      take(1),
+      switchMap(() => of(void 0).pipe(
+        tap(() => this._updateStore({ isHttpLoading: true })),
+        switchMap(() => this._http.get<{ result: number }>('http://localhost:3000/randomNumber')),
+        finalize(() => this._updateStore({ isHttpLoading: false }))
+      )),
+      map((object) => object.result),
+      catchError(() => {alert('ddd'); return EMPTY;}),
+      tap((number) => {
         const randomNumbersInStore: number[] = this._store.getValue().randomNumbers;
         const copyOfNumbers: number[] = [];
         randomNumbersInStore.forEach(num => copyOfNumbers.push(num));
         copyOfNumbers.push(number);
         this._updateStore({ randomNumbers: copyOfNumbers });
-      })
+      }),
+      map(() => void 0)
     )
   }
+
 
   private _updateStore(data: Partial<IStore>): void {
     this._store.next({ ...this._store.getValue(), ...data });

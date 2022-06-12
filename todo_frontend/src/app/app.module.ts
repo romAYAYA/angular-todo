@@ -7,11 +7,34 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CounterComponent } from './counter/counter.component';
 import { TodoComponent } from './todo/todo.component';
-import { TodoItemComponent } from './todo/todo-item/todo-item.component';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TodoAddComponent } from './todo/todo-add/todo-add.component';
+import { TodoListComponent } from './todo/todo-list/todo-list.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, CounterComponent, TodoComponent, TodoItemComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    CounterComponent,
+    TodoComponent,
+    TodoAddComponent,
+    TodoListComponent
+  ],
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    StoreModule.forRoot( {}),
+    StoreDevtoolsModule.instrument(),
+    EffectsModule.forRoot([]),
+    NoopAnimationsModule
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

@@ -14,6 +14,7 @@ export class Task03Component {
   public minOfAllNumbers$$: Observable<number> = this.store.minOfAllnumbers$$;
   public maxOfAllNumbers$$:Observable<number> = this.store.maxOfAllNumbers$$;
   public averageNumber$$: Observable<number> = this.store.averageNumber$$;
+  public isRandomNumberDisabled$$: Observable<boolean> = this.store.isRandomNumberDisabled$$;
 
   constructor(private store: Task03Service) { }
 
