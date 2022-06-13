@@ -1,4 +1,5 @@
 <div *ngFor="let todo of (todos$ | async)">
-  {{ todo.id }} {{ todo.text }}
-  <button (click)="deleteTodo(todo.id)">x</button>
+    <span class="mr-2">{{ todo.id }} {{ todo.text }}</span>
+    <input type='checkbox' checked="{{todo.isDone}}">
+    <button (click)="deleteTodo(todo.id)">x</button>
 </div>

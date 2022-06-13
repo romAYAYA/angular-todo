@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ITodo } from './todo.model';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { ITodo, ITodoRequest } from './todo.model';
+import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 
@@ -10,6 +10,7 @@ export interface ITodoStorageItem {
   isDone: boolean,
   createdOn: string
 }
+
 
 @Injectable({ providedIn: 'root' })
 export class TodoService {
@@ -40,7 +41,7 @@ export class TodoService {
   //   this._todos$.next([...this._todos$.getValue(), newTodo]);
   // }
 
-  create2(todo: Partial<ITodo>): Observable<void> {
+  create2(todo: ITodoRequest): Observable<void> {
    return this._httpClient.post<ITodoStorageItem>('http://localhost:3000/add', todo).pipe(
      map(() => void 0)
    );
@@ -54,10 +55,11 @@ export class TodoService {
   }
 
    remove(id: string): Observable<void> {
-     // const newArray = this._todos$.getValue().filter(item => item.id !== id);
-     // this._todos$.next(newArray);
-     return this._httpClient.delete('http://localhost:3000/delete' + id ).pipe(
-       tap(() => this._todos$.getValue().filter(todo => todo.id !== id)),
+      // const newArray = this._todos$.getValue().filter(item => item.id !== id);
+      // this._todos$.next(newArray);
+     return this._httpClient.delete(`http://localhost:3000/delete/${id}`).pipe(
+       switchMap(() => this._httpClient.get<ITodoStorageItem>('http://localhost:3000/todos')),
+       tap((todos) => this._todos$.next([...this._todos$.getValue(), todos])),
        map(() => void 0)
      )
    }

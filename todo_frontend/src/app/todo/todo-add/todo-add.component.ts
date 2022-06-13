@@ -1,15 +1,16 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TodoService } from '../todo.service';
-import { ITodo } from '../todo.model';
+import { ITodoRequest } from '../todo.model';
 
 @Component({
   selector: 'app-todo-add',
   templateUrl: 'todo-add.component.html',
   styleUrls: ['todo-add.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
-
 })
+
+
 export class TodoAddComponent{
   todoForm: FormGroup;
 
@@ -24,7 +25,7 @@ export class TodoAddComponent{
   }
 
   onSubmit(): void {
-    const formData: Partial<ITodo> = {
+    const formData: ITodoRequest = {
       text: this.todoForm.get('value')?.value,
       isDone: this.todoForm.get('checkbox')?.value
     }
