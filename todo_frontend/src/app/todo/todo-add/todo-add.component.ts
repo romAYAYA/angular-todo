@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Todo } from '../todo.model';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TodoService } from '../todo.service';
+import { ITodo } from '../todo.model';
 
 @Component({
   selector: 'app-todo-add',
@@ -11,8 +10,7 @@ import { TodoService } from '../todo.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 
 })
-export class TodoAddComponent implements OnInit{
-  todos$!: Observable<Todo[]>;
+export class TodoAddComponent{
   todoForm: FormGroup;
 
   constructor(
@@ -20,17 +18,21 @@ export class TodoAddComponent implements OnInit{
     private formBuilder: FormBuilder
   ) {
     this.todoForm = this.formBuilder.group({
-      id: [''],
-      value: ['', Validators.required]
+      value: ['', Validators.required],
+      checkbox: [false, Validators.required]
     });
   }
 
-  ngOnInit(): void {
-    this.todos$ = this.todoService.todos$;
+  onSubmit(): void {
+    const formData: Partial<ITodo> = {
+      text: this.todoForm.get('value')?.value,
+      isDone: this.todoForm.get('checkbox')?.value
+    }
+    this.todoService.create2(formData).subscribe();
+    this.todoForm.reset();
   }
 
-  onSubmit(): void {
-    this.todoService.create(this.todoForm.value);
-    this.todoForm.reset();
+  getAllTodos(): void {
+    this.todoService.uploadAllTodos().subscribe();
   }
 }

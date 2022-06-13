@@ -6,10 +6,10 @@ import {
   loadTodosSuccess,
   loadTodosFailure,
 } from './todo.action';
-import { Todo } from '../../todo/todo.model';
+import { ITodo } from '../../todo/todo.model';
 
 export interface TodoState {
-  todos: Todo[];
+  todos: ITodo[];
   error: string | null;
   status: 'pending' | 'loading' | 'error' | 'success';
 }

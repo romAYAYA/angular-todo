@@ -1,35 +1,70 @@
 import { Injectable } from '@angular/core';
-import { Todo } from './todo.model';
-import { BehaviorSubject } from 'rxjs';
+import { ITodo } from './todo.model';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+
+
+export interface ITodoStorageItem {
+  id: string,
+  text: string,
+  isDone: boolean,
+  createdOn: string
+}
 
 @Injectable({ providedIn: 'root' })
 export class TodoService {
-  private _todo$ = new BehaviorSubject<Todo[]>([]);
-  readonly todos$ = this._todo$.asObservable();
-
-  public todos: Todo[] = [];
-  public nextId: number = 1;
-
-  constructor() {}
+  private _todos$: BehaviorSubject<ITodo[]> = new BehaviorSubject<ITodo[]>([]);
+  readonly todos$: Observable<ITodo[]> = this._todos$.asObservable();
+  constructor(private _httpClient: HttpClient) {}
 
   // load() {
   //   //Load from Database
   // }
 
-  create(item: Todo): void {
-    item.id = this.nextId++;
-    this.todos.push(item);
-    this._todo$.next(Object.assign([], this.todos));
+
+  // create(todoText: string): void {
+  //   const arrayTodo = this._todos$.getValue();
+  //   const objIds = arrayTodo.map((obj) => obj.id);
+  //   let todoId;
+  //   if(objIds.length === 0){
+  //      todoId = 1;
+  //   }else {
+  //     todoId = Math.max(...objIds) + 1;
+  //   }
+  //   const newTodo: ITodo = {
+  //     id: todoId.toString(),
+  //     text: todoText,
+  //     isDone: false,
+  //   }
+  //
+  //   this._todos$.next([...this._todos$.getValue(), newTodo]);
+  // }
+
+  create2(todo: Partial<ITodo>): Observable<void> {
+   return this._httpClient.post<ITodoStorageItem>('http://localhost:3000/add', todo).pipe(
+     map(() => void 0)
+   );
   }
 
-  remove(id: number): void {
-    this.todos.forEach((t, i) => {
-      if (t.id === id) {
-        this.todos.splice(i, 1);
-      }
-      this._todo$.next(Object.assign([], this.todos));
-    });
+  uploadAllTodos(): Observable<void>{
+   return this._httpClient.get<ITodoStorageItem[]>('http://localhost:3000/todos').pipe(
+      tap((todos) => this._todos$.next(todos)),
+      map(() => void 0)
+    )
   }
+
+   remove(id: string): Observable<void> {
+     // const newArray = this._todos$.getValue().filter(item => item.id !== id);
+     // this._todos$.next(newArray);
+     return this._httpClient.delete('http://localhost:3000/delete' + id ).pipe(
+       tap(() => this._todos$.getValue().filter(todo => todo.id !== id)),
+       map(() => void 0)
+     )
+   }
+
+  // update(todo: Todo): void {
+  //
+  // }
 
 
 }
