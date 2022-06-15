@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ITodo, ITodoRequest } from './todo.model';
-import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, concatMap, map, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 
@@ -17,10 +17,6 @@ export class TodoService {
   private _todos$: BehaviorSubject<ITodo[]> = new BehaviorSubject<ITodo[]>([]);
   readonly todos$: Observable<ITodo[]> = this._todos$.asObservable();
   constructor(private _httpClient: HttpClient) {}
-
-  // load() {
-  //   //Load from Database
-  // }
 
 
   // create(todoText: string): void {
@@ -43,7 +39,7 @@ export class TodoService {
 
   create2(todo: ITodoRequest): Observable<void> {
    return this._httpClient.post<ITodoStorageItem>('http://localhost:3000/add', todo).pipe(
-     map(() => void 0)
+     concatMap(() => this.uploadAllTodos()),
    );
   }
 
@@ -58,9 +54,9 @@ export class TodoService {
       // const newArray = this._todos$.getValue().filter(item => item.id !== id);
       // this._todos$.next(newArray);
      return this._httpClient.delete(`http://localhost:3000/delete/${id}`).pipe(
-       switchMap(() => this._httpClient.get<ITodoStorageItem>('http://localhost:3000/todos')),
-       tap((todos) => this._todos$.next([...this._todos$.getValue(), todos])),
-       map(() => void 0)
+       concatMap(() => this.uploadAllTodos()),
+       // switchMap(() => this._httpClient.get<ITodoStorageItem>('http://localhost:3000/todos')),
+       // tap((todos) => this._todos$.next([...this._todos$.getValue(), todos])),
      )
    }
 

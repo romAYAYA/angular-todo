@@ -11,10 +11,15 @@ import { TodoService } from '../todo.service';
 })
 export class TodoListComponent {
   todos$: Observable<ITodo[]> = this.todoService.todos$;
-
+  public selectedTodo!: ITodo;
   constructor(private todoService: TodoService) {}
 
    deleteTodo(todoId: string): void {
      this.todoService.remove(todoId).subscribe();
    }
+
+  selectTodo(todo: ITodo): void {
+    this.selectedTodo = todo;
+   }
+
 }

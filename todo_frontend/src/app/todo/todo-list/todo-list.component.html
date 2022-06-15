@@ -1,5 +1,8 @@
-<div *ngFor="let todo of (todos$ | async)">
+<div class="todo" *ngFor="let todo of (todos$ | async)" (click)="selectTodo(todo)">
     <span class="mr-2">{{ todo.id }} {{ todo.text }}</span>
     <input type='checkbox' checked="{{todo.isDone}}">
     <button (click)="deleteTodo(todo.id)">x</button>
 </div>
+
+<app-edit-todo [todo]=selectedTodo></app-edit-todo>
+

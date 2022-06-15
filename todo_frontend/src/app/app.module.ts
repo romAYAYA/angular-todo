@@ -13,7 +13,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TodoAddComponent } from './todo/todo-add/todo-add.component';
 import { TodoListComponent } from './todo/todo-list/todo-list.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TodoEditComponent } from './todo/todo-edit/todo-edit.component';
 
 
 @NgModule({
@@ -23,17 +24,19 @@ import { ReactiveFormsModule } from '@angular/forms';
     CounterComponent,
     TodoComponent,
     TodoAddComponent,
-    TodoListComponent
+    TodoListComponent,
+    TodoEditComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot( {}),
+    StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot([]),
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
