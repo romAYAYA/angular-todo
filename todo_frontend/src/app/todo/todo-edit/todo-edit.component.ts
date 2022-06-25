@@ -9,7 +9,7 @@ import { ITodo } from '../todo.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoEditComponent {
-  @Input() todo: ITodo | undefined
+  @Input() todo: ITodo | null = null;
 
   update(): void {
 

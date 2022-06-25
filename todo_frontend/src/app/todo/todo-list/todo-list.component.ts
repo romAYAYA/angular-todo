@@ -19,7 +19,6 @@ export class TodoListComponent {
    }
 
   selectTodo(todo: ITodo): void {
-    if(this.selectedTodo == null) { return;}
     this.selectedTodo = todo;
    }
 
