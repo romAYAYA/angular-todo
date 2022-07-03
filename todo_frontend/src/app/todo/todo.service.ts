@@ -45,7 +45,7 @@ export class TodoService {
    }
 
    setActiveTodo(todo: ITodo): void {
-    this._todos$.getValue().map((item) => item.selected = false);
+    this._todos$.getValue().forEach((item) => item.selected = false);
     const findTodo = this._todos$.getValue().find((item) => item.id === todo.id);
     if(findTodo == null){ return; }
     findTodo.selected = true;
