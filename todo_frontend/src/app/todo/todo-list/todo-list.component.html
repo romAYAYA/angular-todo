@@ -1,8 +1,11 @@
 <div class="todo" *ngFor="let todo of (todos$ | async)" (click)="selectTodo(todo)">
-    <span class="mr-2">{{ todo.id }} {{ todo.text }}</span>
-    <input type='checkbox' checked="{{todo.isDone}}">
-    <button (click)="deleteTodo(todo.id)">x</button>
+    <span class=" todo_span mr-2">{{ todo.id }} {{ todo.text }}</span>
+    <input class="todo_input" type='checkbox' checked="{{todo.isDone}}">
+    <button class="todo_button ml-5" (click)="deleteTodo(todo.id)">x</button>
 </div>
 
-<app-edit-todo [todo]=selectedTodo></app-edit-todo>
+<app-edit-todo [todo]="selectedTodo$ | async"></app-edit-todo>
+<div>
+  {{ selectedTodo$ | async | json }}
+</div>
 

@@ -11,7 +11,7 @@ import { TodoService } from '../todo.service';
 })
 export class TodoListComponent {
   todos$: Observable<ITodo[]> = this.todoService.todos$;
-  public selectedTodo: ITodo | null = null;
+  public selectedTodo$: Observable<ITodo | null> = this.todoService.selectedTodo$;
   constructor(private todoService: TodoService) {}
 
    deleteTodo(todoId: string): void {
@@ -19,7 +19,7 @@ export class TodoListComponent {
    }
 
   selectTodo(todo: ITodo): void {
-    this.selectedTodo = todo;
+     this.todoService.setActiveTodo(todo);
    }
 
 }
