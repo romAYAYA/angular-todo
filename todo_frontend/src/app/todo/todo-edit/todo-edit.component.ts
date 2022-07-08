@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ITodo } from '../todo.model';
 
 
@@ -10,8 +10,9 @@ import { ITodo } from '../todo.model';
 })
 export class TodoEditComponent {
   @Input() todo: ITodo | null = null;
+  @Output() updatedTodo: EventEmitter<ITodo> = new EventEmitter<ITodo>();
 
-  update(): void {
-
+  update(todo:ITodo): void {
+    this.updatedTodo.emit(todo);
   }
 }

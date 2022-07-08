@@ -53,12 +53,17 @@ export class TodoService {
     const copyofArray :ITodo[] = [];
     todosInStore.forEach((todo) => copyofArray.push({ ...todo }));
     this._todos$.next(copyofArray);
-    // разобраться с селектом
+
    }
 
-  // update(todo: Todo): void {
-  //
-  // }
+  update(todo: ITodo): void {
+    const findTodo = this._todos$.getValue().find((item) => item.id === todo.id);
+    if(findTodo == null){ return; }
+    const todosInStore = this._todos$.getValue();
+    const copyofArray :ITodo[] = [];
+    todosInStore.forEach((todo) => copyofArray.push({ ...todo }));
+    this._todos$.next(copyofArray);
+  }
 
 
 }

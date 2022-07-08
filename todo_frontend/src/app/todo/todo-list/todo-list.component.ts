@@ -10,7 +10,7 @@ import { TodoService } from '../todo.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoListComponent {
-  todos$: Observable<ITodo[]> = this.todoService.todos$;
+  public todos$: Observable<ITodo[]> = this.todoService.todos$;
   public selectedTodo$: Observable<ITodo | null> = this.todoService.selectedTodo$;
   constructor(private todoService: TodoService) {}
 
@@ -20,6 +20,10 @@ export class TodoListComponent {
 
   selectTodo(todo: ITodo): void {
      this.todoService.setActiveTodo(todo);
+   }
+
+   updateTodo(todo:ITodo): void {
+    this.todoService.update(todo);
    }
 
 }
