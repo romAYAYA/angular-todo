@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { AppService } from './app.service';
-import { IAddTodo, ITodoStorageItem } from './todo.storage';
+import { IAddTodo, ITodoStorageItem, IUpdateTodo } from './todo.storage';
 
 @Controller()
 export class AppController {
@@ -27,6 +27,12 @@ export class AppController {
   async addTodo(@Body() todo: IAddTodo): Promise<ITodoStorageItem> {
     await this._sleep(2000);
     return this.appService.todoStore.addTodo(todo);
+  }
+
+  @Post('update')
+  async UpdateTodo(@Body() todo: IUpdateTodo): Promise<ITodoStorageItem> {
+    await this._sleep(1500);
+    return this.appService.todoStore.updateTodo(todo);
   }
 
   @Delete('delete/:id')

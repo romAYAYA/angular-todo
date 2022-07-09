@@ -13,6 +13,12 @@ export interface IAddTodo {
   isDone: boolean;
 }
 
+export interface IUpdateTodo {
+  id: string;
+  text: string;
+  isDone: boolean;
+}
+
 @Injectable()
 export class TodoStorage {
   private _store: ITodoStorageItem[] = [
@@ -43,6 +49,15 @@ export class TodoStorage {
     };
     this._store.push(itemToAdd);
     return itemToAdd;
+  }
+
+  public updateTodo(todo: IUpdateTodo): ITodoStorageItem {
+    const itemToUpdate = this._store.find(x => x.id === todo.id);
+    if (itemToUpdate != null) {
+      itemToUpdate.text = todo.text;
+      itemToUpdate.isDone = todo.isDone;
+    }
+    return itemToUpdate;
   }
 
   public deleteTodo(id: ITodoStorageItem['id']): void {
