@@ -1,35 +1,33 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, distinctUntilChanged, EMPTY, finalize, map, Observable, of, switchMap, take, tap } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, map, Observable, of, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+
 
 export interface IStore {
   randomNumbers: number[],
   isHttpLoading: boolean
 }
 
+export interface IRequestResponse {
+  result: number
+}
+
 @Injectable()
 export class Task03Service {
+
 
   private _store: BehaviorSubject<IStore> = new BehaviorSubject<IStore>({
     randomNumbers: [],
     isHttpLoading: false
   });
 
-  isRandomNumberDisabled$$: Observable<boolean> = this._store.pipe(
-    map((store) => store.isHttpLoading),
-    distinctUntilChanged()
-
+  randomNumbers$$:Observable<number[]> = this._store.pipe(
+    map((store) => store.randomNumbers)
   )
 
-  randomNumbers$$:Observable<number[]> = this._store.pipe(
-    map((store) => store.randomNumbers),
-    distinctUntilChanged()
-  );
-
-  public numbers$$: Observable<number[]> = this._store.pipe(
-    map((store) => store.randomNumbers),
-    distinctUntilChanged()
-  );
+  isLoading$$:Observable<boolean> = this._store.pipe(
+    map((store) => store.isHttpLoading)
+  )
 
   public countOfNumbers$$: Observable<number> = this._store.pipe(
     map((store) => store.randomNumbers.length),
@@ -45,7 +43,6 @@ export class Task03Service {
     }),
     distinctUntilChanged()
   );
-
 
   public maxOfAllNumbers$$: Observable<number> = this._store.pipe(
     map((store) => {
@@ -67,44 +64,28 @@ export class Task03Service {
     distinctUntilChanged()
   );
 
-  constructor(private _http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
-  public addRandomNumber$2(): Observable<void> {
-    return this._http.get<{result: number}>('http://localhost:3000/randomNumber').pipe(
+  getRandomNumberFromServer(): Observable<void> {
+    return of(0).pipe(
       tap(() => this._updateStore({ isHttpLoading: true })),
+      switchMap(() => this.http.get<{result: number}>('http://localhost:3000/randomNumber')),
       map((object) => object.result),
       tap((number) => {
-        const randomNumbersInStore: number[] = this._store.getValue().randomNumbers;
-        const copyOfNumbers: number[] = [];
-        randomNumbersInStore.forEach(num => copyOfNumbers.push(num));
-        copyOfNumbers.push(number);
-        this._updateStore({ randomNumbers: copyOfNumbers, isHttpLoading: false });
+        const oldRandomNumbers = this._store.getValue().randomNumbers;
+        this._updateStore({ randomNumbers: [...oldRandomNumbers, number], isHttpLoading: false })
       }),
+     //  tap((number) => {
+     //   const randomNumbersInStore: number[] = this._store.getValue().randomNumbers;
+     //   const copyOfNumbers: number[] = [];
+     //   randomNumbersInStore.forEach(num => copyOfNumbers.push(num));
+     //   copyOfNumbers.push(number);
+     //   this._updateStore({ randomNumbers: copyOfNumbers, isHttpLoading: false })
+     // }),
       map(() => void 0)
     )
   }
-
-  public addRandomNumber$(): Observable<void> {
-    return this.randomNumbers$$.pipe(
-      take(1),
-      switchMap(() => of(void 0).pipe(
-        tap(() => this._updateStore({ isHttpLoading: true })),
-        switchMap(() => this._http.get<{ result: number }>('http://localhost:3000/randomNumber')),
-        finalize(() => this._updateStore({ isHttpLoading: false }))
-      )),
-      map((object) => object.result),
-      catchError(() => {alert('ddd'); return EMPTY;}),
-      tap((number) => {
-        const randomNumbersInStore: number[] = this._store.getValue().randomNumbers;
-        const copyOfNumbers: number[] = [];
-        randomNumbersInStore.forEach(num => copyOfNumbers.push(num));
-        copyOfNumbers.push(number);
-        this._updateStore({ randomNumbers: copyOfNumbers });
-      }),
-      map(() => void 0)
-    )
-  }
-
 
   private _updateStore(data: Partial<IStore>): void {
     this._store.next({ ...this._store.getValue(), ...data });

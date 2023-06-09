@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TodoService } from '../todo.service';
 import { ITodoRequest } from '../todo.model';
 
+
 @Component({
   selector: 'app-todo-add',
   templateUrl: 'todo-add.component.html',
@@ -11,7 +12,7 @@ import { ITodoRequest } from '../todo.model';
 })
 
 
-export class TodoAddComponent{
+export class TodoAddComponent {
   todoForm: FormGroup;
 
   constructor(
@@ -29,7 +30,7 @@ export class TodoAddComponent{
       text: this.todoForm.get('value')?.value,
       isDone: this.todoForm.get('checkbox')?.value
     }
-    this.todoService.create2(formData).subscribe();
+    this.todoService.createTodo(formData).subscribe();
     this.todoForm.reset();
   }
 

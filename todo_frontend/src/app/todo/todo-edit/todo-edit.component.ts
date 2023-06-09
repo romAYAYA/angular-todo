@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ITodo } from '../todo.model';
-
+import { TodoService } from '../todo.service';
 
 @Component({
   selector: 'app-edit-todo',
@@ -9,10 +9,20 @@ import { ITodo } from '../todo.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoEditComponent {
-  @Input() todo: ITodo | null = null;
-  @Output() updatedTodo: EventEmitter<ITodo> = new EventEmitter<ITodo>();
+  @Input() todo?: ITodo;
 
-  update(todo:ITodo): void {
-    this.updatedTodo.emit(todo);
+  constructor(private todoService: TodoService) {
+  }
+
+  updateTodo(): void {
+    if (this.todo) {
+      this.todoService.editTodo(this.todo).subscribe(
+        () => {
+        },
+        (error) => {
+          console.error('Error occurred while updating todo item:', error);
+        }
+      );
+    }
   }
 }

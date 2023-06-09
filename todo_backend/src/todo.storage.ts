@@ -52,7 +52,7 @@ export class TodoStorage {
   }
 
   public updateTodo(todo: IUpdateTodo): ITodoStorageItem {
-    const itemToUpdate = this._store.find(x => x.id === todo.id);
+    const itemToUpdate = this._store.find((x) => x.id === todo.id);
     if (itemToUpdate != null) {
       itemToUpdate.text = todo.text;
       itemToUpdate.isDone = todo.isDone;

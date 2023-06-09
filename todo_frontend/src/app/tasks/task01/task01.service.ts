@@ -53,6 +53,9 @@ export class Task01Service {
      this._updateStore({ counter: currentCounter });
    }
 
+
+
+
   private _updateStore(data: Partial<IStore>): void {
     this._store.next({ ...this._store.getValue(), ...data });
   }

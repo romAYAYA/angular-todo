@@ -1,9 +1,10 @@
-<div *ngIf="todo">
+<div>
   <h2>Todo Details</h2>
-  <div>id:{{ todo.id}} </div>
+  <div>id:2 </div>
   <div>
-    <label for="hero-name">Todo text: </label>
-    <input id="hero-name" [(ngModel)]="todo.text" placeholder="name">
+    <label for='hero-name'>Todo text: </label>
+    <input id='hero-name'  placeholder='name' formControlName='text'>
   </div>
-  <button class="btn btn-success" (click)="update(todo)">Save</button>
+  <button (click)="updateTodo()">Update Todo</button>
+
 </div>
